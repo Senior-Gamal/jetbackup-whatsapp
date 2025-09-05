@@ -1,0 +1,6 @@
+{
+  "name": "WhatsApp Botgini",
+  "description": "JetBackup plugin to send notifications to WhatsApp using Botgini API.",
+  "version": "1.0",
+  "author": "Mr Dev"
+}
