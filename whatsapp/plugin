@@ -1,2 +1,27 @@
 #!/bin/bash
-echo "JetBackup WhatsApp Plugin"
+
+# Arguments:
+# $1 = Message from JetBackup
+# $2 = JSON settings (contains: whatsapp_number, instance_id, access_token)
+
+MESSAGE="$1"
+SETTINGS_JSON="$2"
+
+# Extract values using jq
+WHATSAPP_NUMBER=$(echo "$SETTINGS_JSON" | jq -r '.whatsapp_number')
+INSTANCE_ID=$(echo "$SETTINGS_JSON" | jq -r '.instance_id')
+ACCESS_TOKEN=$(echo "$SETTINGS_JSON" | jq -r '.access_token')
+
+# Botgini API endpoint
+API_URL="https://botgini.com/api/send"
+
+# Send the message
+curl -s -X POST "$API_URL" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"number\": \"$WHATSAPP_NUMBER\",
+    \"type\": \"text\",
+    \"message\": \"$MESSAGE\",
+    \"instance_id\": \"$INSTANCE_ID\",
+    \"access_token\": \"$ACCESS_TOKEN\"
+  }"
